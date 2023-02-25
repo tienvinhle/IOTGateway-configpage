@@ -10,13 +10,13 @@ def index():
     return render_template('index.html')
 
 @app.route('/uploadmodbus', methods=['POST'])
-def upload():
+def upload_modbus():
     file = request.files['file']
     file.save(os.path.join(app.config['UPLOAD_MOSBUS_FOLDER'], file.filename))
     return 'File uploaded successfully'
 
 @app.route('/viewmodbusconfig')
-def view_config():
+def view_modbus_config():
     filename = '/etc/modbus/deviceConfig.conf'
     try:
         with open(filename, 'r') as f:
@@ -26,13 +26,13 @@ def view_config():
     return config
 
 @app.route('/uploadmqtt', methods=['POST'])
-def upload():
+def upload_mqtt():
     file = request.files['file']
     file.save(os.path.join(app.config['UPLOAD_MQTT_FOLDER'], file.filename))
     return 'File uploaded successfully'
 
 @app.route('/viewmqttconfig')
-def view_config():
+def view_mqtt_config():
     filename = '/etc/mqtt/appConfig.conf'
     try:
         with open(filename, 'r') as f:
