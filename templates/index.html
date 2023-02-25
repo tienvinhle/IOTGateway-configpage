@@ -22,17 +22,42 @@
           </div>
         </div>
         <div class="text-center">
-          <button class="btn btn-warning" type="button" id="upload-btn">Upload</button>
+          <button class="btn btn-warning" type="button" id="upload-modbus-btn">Upload</button>
         </div>
       </div>
     </div>
     <div class="row mt-3">
       <div class="col-sm-6 offset-sm-3">
         <div class="text-center">
-          <button class="btn btn-warning" type="button" id="view-config-btn">View Config</button>
+          <button class="btn btn-warning" type="button" id="view-modbusconfig-btn">View Config</button>
         </div>
         <div class="mt-3">
-          <pre id="config-display"></pre>
+          <pre id="modbusconfig-display"></pre>
+        </div>
+      </div>
+    </div>
+    <h3>MQTT Config</h3>
+    <hr>
+    <div class="row">
+      <div class="col-sm-6 offset-sm-3">
+        <div class="input-group mb-3">
+          <div class="custom-file">
+            <input type="file" class="custom-file-input" id="mqtt-file" name="mqtt-file">
+            <label class="custom-file-label" for="mqtt-file">Browse MQTT Config</label>
+          </div>
+        </div>
+        <div class="text-center">
+          <button class="btn btn-warning" type="button" id="upload-mqtt-btn">Upload</button>
+        </div>
+      </div>
+    </div>
+    <div class="row mt-3">
+      <div class="col-sm-6 offset-sm-3">
+        <div class="text-center">
+          <button class="btn btn-warning" type="button" id="view-mqttconfig-btn">View MQTT Config</button>
+        </div>
+        <div class="mt-3">
+          <pre id="mqttconfig-display"></pre>
         </div>
       </div>
     </div>
@@ -40,13 +65,13 @@
 
   <script>
     $(document).ready(function(){
-      $("#upload-btn").click(function(){
+      $("#upload-modbus-btn").click(function(){
         var fd = new FormData();
         var files = $('#modbus-file')[0].files[0];
         fd.append('file',files);
 
         $.ajax({
-          url: '/upload',
+          url: '/uploadmodbus',
           type: 'post',
           data: fd,
           contentType: false,
@@ -57,12 +82,39 @@
         });
       });
 
-      $("#view-config-btn").click(function(){
+      $("#view-modbusconfig-btn").click(function(){
         $.ajax({
-          url: '/viewconfig',
+          url: '/viewmodbusconfig',
           type: 'get',
           success: function(response){
-            $("#config-display").text(response);
+            $("#modbusconfig-display").text(response);
+          },
+        });
+      });
+
+      $("#upload-mqtt-btn").click(function(){
+        var fd = new FormData();
+        var files = $('#mqtt-file')[0].files[0];
+        fd.append('file',files);
+
+        $.ajax({
+          url: '/uploadmqtt',
+          type: 'post',
+          data: fd,
+          contentType: false,
+          processData: false,
+          success: function(response){
+            alert(response);
+          },
+        });
+      });
+
+      $("#view-mqttconfig-btn").click(function(){
+        $.ajax({
+          url: '/viewmqttconfig',
+          type: 'get',
+          success: function(response){
+            $("#mqttconfig-display").text(response);
           },
         });
       });
